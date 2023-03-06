@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection.Metadata;
 using System.Text;
 
 namespace XEFExtract
@@ -196,9 +197,24 @@ namespace XEFExtract
 
         public void WriteFrame(byte[] frameData)
         {
-            _writer.Write(frameData);
-            _lastFrameData = frameData;
+            int max = 0;
+            byte[] grayFrame = new byte[217088];
+            for (int i = 0; i < frameData.Length; i += 2)
+            {
+                int depth = frameData[i] | frameData[i + 1] << 16;
+                if (depth > max) max = depth;
+            }
+            for (int i = 0; i < frameData.Length; i += 2)
+            {
+                int depth = frameData[i] | frameData[i + 1] << 8;
+                depth = (int)(((float)depth / 10000.0f) * 255);
+                grayFrame[i / 2] = (byte)depth;
+            }
+
+            _writer.Write(grayFrame);
+            _lastFrameData = grayFrame;
             FrameCount++;
+
         }
 
         public void WriteFrame(byte[] frameData, TimeSpan timestamp)

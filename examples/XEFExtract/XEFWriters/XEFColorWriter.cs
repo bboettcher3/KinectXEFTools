@@ -41,12 +41,12 @@ namespace XEFExtract
             EndTime = TimeSpan.Zero;
 
             _writer = new VideoWriter(path,
-                VideoWriter.FrameFormat.YUYV422,
+                VideoWriter.FrameFormat.GRAY8,
                 VideoWriter.VideoCodec.MPEG4,
-                1920,
-                1080,
-                30,
-                4000000);
+                512,
+                424,
+                15,
+                400000);
         }
 
         ~XEFColorWriter()
@@ -91,7 +91,11 @@ namespace XEFExtract
 
         public void ProcessEvent(XEFEvent ev)
         {
-            if (ev.EventStreamDataTypeId != StreamDataTypeIds.UncompressedColor)
+            /*if (ev.EventStreamDataTypeId != StreamDataTypeIds.UncompressedColor)
+            {
+                return;
+            } */
+            if (ev.EventStreamDataTypeId != StreamDataTypeIds.Depth)
             {
                 return;
             }
