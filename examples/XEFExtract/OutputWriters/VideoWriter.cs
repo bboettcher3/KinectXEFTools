@@ -201,13 +201,13 @@ namespace XEFExtract
             byte[] grayFrame = new byte[217088];
             for (int i = 0; i < frameData.Length; i += 2)
             {
-                int depth = frameData[i] | frameData[i + 1] << 16;
+                int depth = frameData[i] | frameData[i + 1] << 8;
                 if (depth > max) max = depth;
             }
             for (int i = 0; i < frameData.Length; i += 2)
             {
                 int depth = frameData[i] | frameData[i + 1] << 8;
-                depth = (int)(((float)depth / 10000.0f) * 255);
+                depth = (int)(((float)depth / max) * 255);
                 grayFrame[i / 2] = (byte)depth;
             }
 
