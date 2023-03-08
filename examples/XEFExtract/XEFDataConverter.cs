@@ -69,7 +69,7 @@ namespace XEFExtract
 
             string rgbVideoPath = basePath + "_RGB.avi";
             string wavAudioPath = basePath + "_Audio.wav";
-            string fulVideoPath = basePath + "_Video.avi";
+            string fulVideoPath = basePath + "_Video.mp4";
             string skeletonPath = basePath + "_Skeleton.csv";
             string depthDatPath = basePath + "_Depth.csv";
 
